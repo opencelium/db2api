@@ -810,6 +810,9 @@ public class RequestHandler {
             case "INT":
             case "INT4":
             case "INT2":
+            case "UNIQUEIDENTIFIER":
+                value = rs.getString(colName);
+                break;		
             case "SERIAL":
                 value = rs.getInt(colName);
                 break;
