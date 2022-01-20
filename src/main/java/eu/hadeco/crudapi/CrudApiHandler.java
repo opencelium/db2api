@@ -52,7 +52,7 @@ class CrudApiHandler extends AbstractHandler {
         Server server = new Server();
         ServerConnector connector = new ServerConnector(server, factory);
         server.setConnectors(new Connector[]{connector});
-        connector.setHost("localhost");
+        connector.setHost("0.0.0.0");
         connector.setPort(8080);
         server.addConnector(connector);
         CrudApiHandler crudApiHandler = new CrudApiHandler();
