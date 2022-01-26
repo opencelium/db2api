@@ -109,7 +109,7 @@ public class RequestHandler {
         // retrieve the table and key from the path
         String tableName = request[0].replaceAll("[^a-zA-Z0-9_]+", "");
         if (tableName == null || tableName.isEmpty()) {
-            throw new ClassNotFoundException("entity");
+            throw new TableNameNotFoundException("entity");		
         }
         final String contentType = req.getContentType();
         isJsonContent = contentType != null ? contentType.toLowerCase().startsWith("application/json") : false;
@@ -177,6 +177,10 @@ public class RequestHandler {
                     resp.setStatus(HttpServletResponse.SC_OK);
                     handler.handleRequest(writer);
                 }
+            } catch (TableNameNotFoundException ex) {
+                resp.setContentType("text/plain");
+                resp.setStatus(HttpServletResponse.SC_OK);
+                writer.write(String.format("Not found (%s)", ex.getMessage()));		
             } catch (NumberFormatException ex) {
                 resp.setContentType("text/plain");
                 resp.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
@@ -293,6 +297,7 @@ public class RequestHandler {
     private Map<String, String> getColumnTypesMap(String table) throws ClassNotFoundException {
         ResultSetMetaData rsMeta;
         Map<String, String> typeMap;
+		
         try (ResultSet rs = link.createStatement().executeQuery(String.format("SELECT * from %s where 0=1", table))) {
             rsMeta = rs.getMetaData();
             typeMap = new LinkedTreeMap<>(String.CASE_INSENSITIVE_ORDER);
