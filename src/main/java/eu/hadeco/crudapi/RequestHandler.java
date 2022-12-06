@@ -176,6 +176,7 @@ public class RequestHandler {
                     resp.setContentType("application/json; charset=utf-8");
                     resp.setStatus(HttpServletResponse.SC_OK);
                     handler.handleRequest(writer);
+                    apiConfig.close();
                 }
             } catch (TableNameNotFoundException ex) {
                 resp.setContentType("text/plain");
