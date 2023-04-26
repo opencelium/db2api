@@ -21,7 +21,7 @@ These features makes it a lot more responsive under heavy load than php version.
 
 Install dependencies using:
 
-    sudo apt-get install maven openjdk-7-jdk
+    sudo apt-get install maven openjdk-17-jdk
 
 Then build the server.
 
