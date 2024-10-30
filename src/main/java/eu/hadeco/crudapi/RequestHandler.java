@@ -771,6 +771,7 @@ public class RequestHandler {
                 value = rs.getString(colName);
                 break;
             case "JSON":
+            case "JSONB":
             case "CLOB":
                 final String strValue = rs.getString(colName);
                 try {
@@ -790,6 +791,9 @@ public class RequestHandler {
                 }
                 break;
             case "CHARACTER":
+            case "BOOL":
+            case "CITEXT":
+            case "_TEXT":
             case "TEXT":
             case "VARCHAR":
             case "VARCHAR2":
@@ -843,6 +847,7 @@ public class RequestHandler {
                 final byte[] bytes = rs.getBytes(colName);
                 value = bytes != null ? Base64.encodeToString(bytes, Base64.DEFAULT).trim() : null;
                 break;
+            case "TIMESTAMPTZ":
             case TIME:
                 final String ts = rs.getString(colName);
                 if (ts != null && ts.length() > 19) {
