@@ -791,6 +791,7 @@ public class RequestHandler {
                 }
                 break;
             case "CHARACTER":
+            case "CHAR":
             case "BOOL":
             case "CITEXT":
             case "_TEXT":

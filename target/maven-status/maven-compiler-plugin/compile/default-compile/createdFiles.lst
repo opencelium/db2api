@@ -1,1 +1,16 @@
+eu/hadeco/crudapi/RequestHandler$1.class
+eu/hadeco/crudapi/CrudApiHandler.class
+android/util/Base64.class
+eu/hadeco/crudapi/RequestHandler.class
+android/util/Base64$Decoder.class
+eu/hadeco/crudapi/RequestHandler$2.class
 eu/hadeco/crudapi/TableNameNotFoundException.class
+eu/hadeco/crudapi/TableMeta.class
+com/ivanceras/fluent/sql/SQL.class
+eu/hadeco/crudapi/CrudApiHandler$1.class
+eu/hadeco/crudapi/ApiConfig.class
+com/ivanceras/fluent/sql/SQL$Statics.class
+com/ivanceras/fluent/sql/Breakdown.class
+android/util/Base64$Coder.class
+android/util/Base64$Encoder.class
+eu/hadeco/crudapi/RequestHandler$Actions.class

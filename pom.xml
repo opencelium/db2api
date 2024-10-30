@@ -84,8 +84,11 @@
             <version>4.3.30.RELEASE</version>
             <scope>test</scope>
         </dependency>
-
-
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>3.4.1</version>
+        </dependency>
         <!--SQL drivers-->
         <dependency>
             <groupId>mysql</groupId>
