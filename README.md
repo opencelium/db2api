@@ -13,7 +13,7 @@ Unterstützte Datenbanken:
 1. Repository klonen:
 
 ```
-git clone https://github.com/dein-username/db2api.git
+git clone https://github.com/opencelium/db2api.git
 cd db2api
 ```
 
