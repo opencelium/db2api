@@ -13,6 +13,7 @@ With DB2API, applications can access heterogeneous databases via a **single, con
 
 ## Table of Contents
 
+- [Supported DB Engines](#supported-db-engines)
 - [Installation](#installation-tested-on-ubuntu-server-24043-lts)
 - [API Endpoints](#api-endpoints)
   - [Connection Test](#1-connection-test)
@@ -21,6 +22,31 @@ With DB2API, applications can access heterogeneous databases via a **single, con
   - [Redis Usage](#redis-usage)
 - [Logging](#logging)
 - [License](#license)
+
+---
+
+## Supported DB Engines
+
+DB2API currently supports the following SQL and NoSQL engines:
+
+- **MySQL / Connector/J**  
+- **MariaDB**  
+- **PostgreSQL / Postgres / pgjdbc_ng**  
+- **Microsoft SQL Server / MSSQL**  
+- **Oracle**  
+- **Apache Derby**  
+- **H2**  
+- **HSQLDB**  
+- **Firebird / Jaybird**  
+- **IBM DB2 / ibm_jcc**  
+- **IBM Informix / informix**  
+- **SAP HANA**  
+- **SQLite / Xerial**  
+- **OrientDB**  
+- **MongoDB**  
+- **Redis**  
+
+These are the engines that can currently be used with DB2API.
 
 ---
 
