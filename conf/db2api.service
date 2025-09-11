@@ -1,0 +1,16 @@
+[Unit]
+Description=DB2API Service
+After=network.target
+
+[Service]
+[Service]
+Restart=on-failure
+RestartSec=5s
+Type=simple
+
+WorkingDirectory=/opt/opencelium/services/db2api
+ExecStart=/usr/bin/java -jar /opt/opencelium/services/db2api/target/db2api-1.0.0.jar
+ExecStop=/bin/kill -15 $MAINPID
+
+[Install]
+WantedBy=multi-user.target
