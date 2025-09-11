@@ -1,230 +1,198 @@
-# DB2API
+DB2API
+======
 
-DB2API ist ein einfacher Spring Boot API-Server, der den Zugriff auf verschiedene Datenbanken über HTTP ermöglicht.
+DB2API is a lightweight Spring Boot service that provides a **uniform REST API** 
+for executing queries against different databases such as:
 
-Unterstützte Datenbanken:
+- **SQL databases** (MySQL, PostgreSQL, Oracle, SQL Server, etc.)
+- **MongoDB**
+- **Redis**
 
-* **MongoDB** – mit Filter und Feldselektion (Projections)
-* **Redis** – Zugriff auf Keys
-* **JDBC-kompatible Datenbanken** – z.B. MySQL, PostgreSQL, SQL Server, Oracle, etc.
+With DB2API, applications can access heterogeneous databases via a **single, consistent HTTP interface**.
 
-## Installation / Setup
+---
 
-1. Repository klonen:
+Installation (tested on ubuntu server 24.04.3 LTS)
+------------
 
-```
-git clone https://github.com/opencelium/db2api.git
-cd db2api
-```
+1. Clone the repository:
 
-2. Projekt bauen:
+   .. code-block:: bash
 
-```
-mvn clean package
-```
+      git clone https://github.com/opencelium/db2api.git
+      cd db2api
 
-3. Anwendung starten:
+2. Build the project with Maven:
 
-```
-java -jar target/db2api-0.0.1-SNAPSHOT.jar
-```
+   .. code-block:: bash
 
-Die API läuft standardmäßig auf **[http://localhost:8080](http://localhost:8080)**.
+      mvn clean package
 
-## Endpoints
+3. Activate the systemd file and add it to the Autostart:
 
-Connect Test
+   .. code-block:: bash
 
-````
+      ln -s conf/db2api.service /etc/systemd/system/db2api.service
+      systemctl daemon-reload
+      systemctl enable db2api
 
-**URL:** ``GET /connect-test``  
+5. Start the service:
 
-**Headers:**
+   .. code-block:: bash
 
-+----------------+-----------------------------------------------+
-| Header         | Beschreibung                                 |
-+================+===============================================+
-| X-DB-Engine    | Datenbank-Typ (`mongodb`, `redis`, `mysql`)  |
-+----------------+-----------------------------------------------+
-| X-DB-Host      | Hostname / IP                                 |
-+----------------+-----------------------------------------------+
-| X-DB-Port      | Port (optional)                               |
-+----------------+-----------------------------------------------+
-| X-DB-Name      | Datenbank-Name                                |
-+----------------+-----------------------------------------------+
-| X-DB-User      | Username (optional)                           |
-+----------------+-----------------------------------------------+
-| X-DB-Password  | Passwort (optional)                           |
-+----------------+-----------------------------------------------+
-| X-DB-Options   | Zusätzliche Optionen (optional)               |
-+----------------+-----------------------------------------------+
+      systemctl enable db2api
 
-**Response Beispiel:**
+The service runs by default on port **8080**.
 
-```
-{
-  "requestedAt": "2025-09-11T12:34:56Z",
-  "success": true,
-  "engine": "mongodb",
-  "uri": "mongodb://user:pass@localhost:27017/testdb"
-}
-```
+.. note::
+	If you like to use another port, add in the db2api.server config, at the end of the ExecStart config " --server.port=9090".
+  See example below :
+	
+	.. code-block:: sh
+		:linenos:
+	
+		ExecStart=/usr/bin/java -jar /opt/opencelium/services/db2api/target/db2api-1.0.0.jar --server.port=9000
+		
+	do not forgot to reload the systemd config:	
+			
+	.. code-block:: sh
+		:linenos:	
+	
+		systemctl daemon-reload
+		systemctl enable db2api
+  
 
-Query
-~~~~~
+---
 
-**URL:** ``POST /query``  
-**Content-Type:** ``application/json``
+API Endpoints
+-------------
 
-**Request Body DTO (`QueryRequest`):**
+1. **Connection Test**
 
-+---------+---------------------------+----------------------------------------------------+
-| Feld    | Typ                       | Beschreibung                                      |
-+=========+===========================+====================================================+
-| query   | String                    | Name der Collection (MongoDB), SQL Query (JDBC) oder Key (Redis) |
-+---------+---------------------------+----------------------------------------------------+
-| params  | List[Map[String,Object]]  | Filter für MongoDB, PreparedStatement-Parameter für JDBC |
-+---------+---------------------------+----------------------------------------------------+
-| fields  | List[String]              | Welche Felder bei MongoDB zurückgegeben werden sollen |
-+---------+---------------------------+----------------------------------------------------+
-| maxRows | Integer                   | Max. Anzahl der zurückgegebenen Zeilen            |
-+---------+---------------------------+----------------------------------------------------+
+   .. code-block:: http
 
-MongoDB Beispiel
-````
+      GET /connect-test
 
-**Request:**
+   Required HTTP headers:
 
-```
-POST /query
-{
-  "query": "users",
-  "params": [
-    { "age": { "$gte": 30 }, "status": "active" }
-  ],
-  "fields": ["name", "email"],
-  "maxRows": 50
-}
-```
+   - ``X-DB-Engine``   → Database engine (mysql, postgres, mongodb, redis, …)
+   - ``X-DB-Host``     → Database host
+   - ``X-DB-Port``     → (optional) Database port
+   - ``X-DB-Name``     → Database/schema name
+   - ``X-DB-User``     → (optional) Username
+   - ``X-DB-Password`` → (optional) Password
+   - ``X-DB-Options``  → (optional) Extra connection parameters
 
-**Response:**
+   Example response:
 
-```
-{
-  "success": true,
-  "rowCount": 2,
-  "rows": [
-    { "name": "Alice", "email": "alice@example.com" },
-    { "name": "Bob", "email": "bob@example.com" }
-  ]
-}
-```
+   .. code-block:: json
 
-> `_id` wird nur zurückgegeben, wenn es in `fields` enthalten ist.
+      {
+        "success": true,
+        "engine": "postgres",
+        "databaseProductName": "PostgreSQL",
+        "databaseProductVersion": "14.5"
+      }
 
-JDBC Beispiel (z.B. MySQL)
+---
 
-````
+2. **Execute Query**
 
-**Request:**
+   .. code-block:: http
 
-```
-POST /query
-{
-  "query": "SELECT id, name, email FROM users WHERE age >= ?",
-  "params": [
-    { "age": 30 }
-  ],
-  "maxRows": 100
-}
-```
+      POST /query
+      Content-Type: application/json
 
-**Response:**
+   Request body:
 
-```
-{
-  "success": true,
-  "rowCount": 2,
-  "rows": [
-    { "id": 1, "name": "Alice", "email": "alice@example.com" },
-    { "id": 2, "name": "Bob", "email": "bob@example.com" }
-  ]
-}
-```
+   .. code-block:: json
 
-Redis Beispiel
-~~~~~~~~~~~~~~
+      {
+        "query": "SELECT * FROM users WHERE id = ?",
+        "params": [123],
+        "maxRows": 100
+      }
 
-**Request:**
+   Response example (SQL):
 
-```
-POST /query
-{
-  "query": "mykey"
-}
-```
+   .. code-block:: json
 
-**Response:**
+      {
+        "success": true,
+        "rowCount": 1,
+        "rows": [
+          {
+            "id": 123,
+            "name": "Alice"
+          }
+        ]
+      }
 
-```
-{
-  "success": true,
-  "key": "mykey",
-  "value": "Hello World"
-}
-```
+---
 
-Quick Start / curl Beispiele
----------------------------
+MongoDB Usage
+-------------
 
-MongoDB:
+- ``query`` = collection name
+- ``params`` = filter as JSON object
+- ``fields`` = list of fields to return
+- ``maxRows`` = max number of documents
 
-```
-curl -X POST http://localhost:8080/query \
-  -H "Content-Type: application/json" \
-  -H "X-DB-Engine: mongodb" \
-  -H "X-DB-Host: localhost" \
-  -H "X-DB-Port: 27017" \
-  -H "X-DB-Name: testdb" \
-  -d '{"query":"users","params":[{"age":{"$gte":30}}],"fields":["name","email"],"maxRows":10}'
-```
+Example request:
 
-JDBC (z.B. MySQL):
+.. code-block:: json
 
-```
-curl -X POST http://localhost:8080/query \
-  -H "Content-Type: application/json" \
-  -H "X-DB-Engine: mysql" \
-  -H "X-DB-Host: localhost" \
-  -H "X-DB-Port: 3306" \
-  -H "X-DB-Name: testdb" \
-  -H "X-DB-User: root" \
-  -H "X-DB-Password: secret" \
-  -d '{"query":"SELECT id,name,email FROM users WHERE age >= ?","params":[{"age":30}],"maxRows":10}'
-```
+   {
+     "query": "users",
+     "params": [
+       { "age": { "$gt": 25 } }
+     ],
+     "fields": ["name", "email", "_id"],
+     "maxRows": 10
+   }
 
-Redis:
+Example response:
 
-```
-curl -X POST http://localhost:8080/query \
-  -H "Content-Type: application/json" \
-  -H "X-DB-Engine: redis" \
-  -H "X-DB-Host: localhost" \
-  -H "X-DB-Port: 6379" \
-  -d '{"query":"mykey"}'
-```
+.. code-block:: json
 
-Hinweise
----------
+   {
+     "success": true,
+     "rowCount": 2,
+     "rows": [
+       { "name": "Alice", "email": "alice@example.com", "_id": "64e..." },
+       { "name": "Bob", "email": "bob@example.com", "_id": "64f..." }
+     ]
+   }
 
-- Alle Datenbankzugriffe werden über HTTP-Header für Engine, Host, Port, User, Password gesteuert.  
-- Für MongoDB kann ein beliebiges Filterobjekt als JSON über `params` übergeben werden.  
-- Feldselektion (`fields`) bei MongoDB ermöglicht das gezielte Ein-/Ausschließen von Feldern.  
-- Bei JDBC wird `params` automatisch in PreparedStatement-Parameter konvertiert.
+---
+
+Redis Usage
+-----------
+
+- ``query`` = Redis key
+- ``params`` are ignored
+
+Example request:
+
+.. code-block:: json
+
+   {
+     "query": "myKey"
+   }
+
+Example response:
+
+.. code-block:: json
+
+   {
+     "success": true,
+     "key": "myKey",
+     "value": "Hello World"
+   }
+
+---
 
 License
 -------
 
-Apache-2.0 license 
-
-````
+DB2API is released under the Apache-2.0 License.
