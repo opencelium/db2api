@@ -37,7 +37,7 @@ With DB2API, applications can access heterogeneous databases via a **single, con
 4. Start the service:
 
    ```bash
-   systemctl enable db2api
+   systemctl start db2api
    ```
 
 The service runs by default on port **8080**.
