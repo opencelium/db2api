@@ -29,7 +29,7 @@ With DB2API, applications can access heterogeneous databases via a **single, con
 3. Activate the systemd file and add it to the Autostart:
 
    ```bash
-   ln -s conf/db2api.service /etc/systemd/system/db2api.service
+   ln -s "$(pwd)"/conf/db2api.service /etc/systemd/system/db2api.service
    systemctl daemon-reload
    systemctl enable db2api
    ```
