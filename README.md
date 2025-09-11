@@ -11,6 +11,19 @@ With DB2API, applications can access heterogeneous databases via a **single, con
 
 ---
 
+## Table of Contents
+
+- [Installation](#installation-tested-on-ubuntu-server-24043-lts)
+- [API Endpoints](#api-endpoints)
+  - [Connection Test](#1-connection-test)
+  - [Execute Query](#2-execute-query)
+  - [MongoDB Usage](#mongodb-usage)
+  - [Redis Usage](#redis-usage)
+- [Logging](#logging)
+- [License](#license)
+
+---
+
 ## Installation (tested on Ubuntu Server 24.04.3 LTS)
 
 1. Clone the repository:
@@ -56,7 +69,7 @@ The service runs by default on port **8080**.
 >
 > ```sh
 > systemctl daemon-reload
-> systemctl enable db2api
+> systemctl restart db2api
 > ```
 
 ---
@@ -183,6 +196,18 @@ Content-Type: application/json
   "value": "Hello World"
 }
 ```
+
+---
+
+## Logging
+
+The service logs can be viewed via **journalctl**:
+
+```bash
+journalctl -xe -u db2api -o cat -f
+```
+
+This command shows the live logs (`-f`) of the `db2api` service.
 
 ---
 
