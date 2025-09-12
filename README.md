@@ -116,7 +116,7 @@ GET /connect-test
 - `X-DB-Name`     → Database/schema name  
 - `X-DB-User`     → (optional) Username  
 - `X-DB-Password` → (optional) Password  
-- `X-DB-Options`  → (optional) Extra connection parameters  
+- `X-DB-Options`  → (optional) Extra connection parameters  (e.g. encrypt=false;trustServerCertificate=true to disable ssl verification)
 
 **Example response:**
 
