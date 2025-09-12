@@ -1,0 +1,665 @@
+{
+	"info": {
+		"_postman_id": "33f57ea6-8afa-4d5e-8df6-2b8c1561e7e1",
+		"name": "DB2API",
+		"description": "DB2API is a lightweight Spring Boot service that provides a **uniform REST API**\n\nfor executing queries against different databases such as:\n\n- **SQL databases** (MySQL, PostgreSQL, Oracle, SQL Server, etc.)\n    \n- **MongoDB**\n    \n- **Redis**\n    \n\nWith DB2API, applications can access heterogeneous databases via a **single, consistent HTTP interface**.\n\nIn this **POSTMAN Collection**, i have created test for MySQL, Postgres, Oracle, MSSQL and MongoDB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10780293"
+	},
+	"item": [
+		{
+			"name": "MySQL",
+			"item": [
+				{
+					"name": "connect-test",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-DB-Engine",
+								"value": "mysql",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Host",
+								"value": "{{MYSQL_DB_HOST}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Name",
+								"value": "{{MYSQL_DB_NAME}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-User",
+								"value": "{{MYSQL_DB_USER}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Password",
+								"value": "{{MYSQL_DB_PW}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/connect-test",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"connect-test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-DB-Engine",
+								"value": "mysql",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Host",
+								"value": "{{MYSQL_DB_HOST}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Name",
+								"value": "{{MYSQL_DB_NAME}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-User",
+								"value": "{{MYSQL_DB_USER}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Password",
+								"value": "{{MYSQL_DB_PW}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"query\":\"SELECT * FROM connector\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/query",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"query"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Postgres",
+			"item": [
+				{
+					"name": "connect-test",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-DB-Engine",
+								"value": "postgres",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Host",
+								"value": "{{POSTGRES_DB_HOST}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Name",
+								"value": "{{POSTGRES_DB_NAME}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-User",
+								"value": "{{POSTGRES_DB_USER}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Password",
+								"value": "{{POSTGRES_DB_PW}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/connect-test",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"connect-test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-DB-Engine",
+								"value": "postgres",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Host",
+								"value": "{{POSTGRES_DB_HOST}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Name",
+								"value": "{{POSTGRES_DB_NAME}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-User",
+								"value": "{{POSTGRES_DB_USER}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Password",
+								"value": "{{POSTGRES_DB_PW}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"query\":\"Select * from deine_tabelle\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/query",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"query"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Oracle",
+			"item": [
+				{
+					"name": "connect-test",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-DB-Engine",
+								"value": "oracle",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Host",
+								"value": "{{ORACLE_DB_HOST}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Name",
+								"value": "{{ORACLE_DB_NAME}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-User",
+								"value": "{{ORACLE_DB_USER}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Password",
+								"value": "{{ORACLE_DB_PW}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/connect-test",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"connect-test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-DB-Engine",
+								"value": "oracle",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Host",
+								"value": "{{ORACLE_DB_HOST}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Name",
+								"value": "{{ORACLE_DB_NAME}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-User",
+								"value": "{{ORACLE_DB_USER}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Password",
+								"value": "{{ORACLE_DB_PW}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Options",
+								"value": "encrypt=false;trustServerCertificate=true",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"query\":\"SELECT id, name, TO_CHAR(created_at,'YYYY-MM-DD HH24:MI:SS') AS created_at,TO_CHAR(updated_at,'YYYY-MM-DD HH24:MI:SS') AS updated_at FROM Kunden\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/query",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"query"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "**ORACLE Demo System auf einem Ubuntu 24.04.3 LTS vorbereiten**\n\n1. docker run -d --name oracle-xe -p 1521:1521 -p 5500:5500 -e ORACLE_PASSWORD=MeinPasswort123! gvenzl/oracle-xe\n    \n2. docker exec -it oracle-xe sqlplus \"system/MeinPasswort123!\"@XEPDB1\n    \n3. CREATE TABLESPACE testdb_tbs DATAFILE 'testdb_tbs01.dbf' SIZE 100M AUTOEXTEND ON;\n    \n4. CREATE USER testuser IDENTIFIED BY testpass DEFAULT TABLESPACE testdb_tbs QUOTA UNLIMITED ON testdb_tbs;\n    \n5. GRANT CONNECT, RESOURCE TO testuser;\n    \n6. GRANT DBA TO testuser;\n    \n\n**DemoDaten vorbereiten über POSTMAN**\n\n1. CREATE TABLE meine_tabelle (id NUMBER GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY, name VARCHAR2(255) NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)\n    \n2. INSERT INTO meine_tabelle (name) VALUES ('Max Mustermann')\n    \n3. SELECT id, name, TO_CHAR(created_at,'YYYY-MM-DD HH24:MI:SS') AS created_at,TO_CHAR(updated_at,'YYYY-MM-DD HH24:MI:SS') AS updated_at FROM meine_tabelle"
+		},
+		{
+			"name": "MSSQL",
+			"item": [
+				{
+					"name": "connect-test",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-DB-Engine",
+								"value": "mssql",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Host",
+								"value": "{{MSSQL_DB_HOST}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Name",
+								"value": "{{MSSQL_DB_NAME}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-User",
+								"value": "{{MSSQL_DB_USER}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Password",
+								"value": "{{MSSQL_DB_PW}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Options",
+								"value": "encrypt=false;trustServerCertificate=true",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/connect-test",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"connect-test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-DB-Engine",
+								"value": "mssql",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Host",
+								"value": "{{MSSQL_DB_HOST}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Name",
+								"value": "{{MSSQL_DB_NAME}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-User",
+								"value": "{{MSSQL_DB_USER}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Password",
+								"value": "{{MSSQL_DB_PW}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Options",
+								"value": "encrypt=false;trustServerCertificate=true",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"query\":\"Select * from deine_tabelle;\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/query",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"query"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "**MSSQL Demo System auf einem Ubuntu 24.04.3 LTS vorbereiten**\n\n1. docker run -e \"ACCEPT_EULA=Y\" -e \"SA_PASSWORD=DeinPasswort123!\" -p 1433:1433 --name **mssql** -d mcr.microsoft.com/**mssql**/server:2022-latest\n    \n2. **sqlcmd** -S 127.0.0.1,1433 -U SA -P 'DeinPasswort123!'\n    \n3. CREATE DATABASE TestDB;\n    \n    1. GO;\n        \n4. CREATE LOGIN testuser WITH PASSWORD = 'StarkesPasswort123!'\n    \n    1. USE TestDB;\n        \n    2. CREATE USER testuser FOR LOGIN testuser;\n        \n    3. ALTER ROLE db_owner ADD MEMBER testuser;\n        \n    4. GO\n        \n\n**DemoDaten vorbereiten über POSTMAN**\n\n1. CREATE TABLE deine_tabelle (id INT IDENTITY(1,1) PRIMARY KEY, name NVARCHAR(255) NOT NULL, created_at DATETIME2 DEFAULT SYSDATETIME(), updated_at DATETIME2 DEFAULT SYSDATETIME());\n    \n2. INSERT INTO MeineTabelle (name) VALUES ('Max Mustermann');\n    \n3. Select \\* from deine_tabelle;"
+		},
+		{
+			"name": "MongoDB",
+			"item": [
+				{
+					"name": "connect-test",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-DB-Engine",
+								"value": "mongodb",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Host",
+								"value": "{{MONGODB_DB_HOST}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Name",
+								"value": "{{MONGODB_DB_NAME}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-User",
+								"value": "{{MONGODB_DB_USER}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Password",
+								"value": "{{MONGODB_DB_PW}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/connect-test",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"connect-test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-DB-Engine",
+								"value": "mongodb",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Host",
+								"value": "{{MONGODB_DB_HOST}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Name",
+								"value": "{{MONGODB_DB_NAME}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-User",
+								"value": "{{MONGODB_DB_USER}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Password",
+								"value": "{{MONGODB_DB_PW}}",
+								"type": "text"
+							},
+							{
+								"key": "X-DB-Options",
+								"value": "encrypt=false;trustServerCertificate=true",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"query\": \"connection\",\n    \"params\": [\n    { \"version\": { \"$ne\": \"4.4\" } }\n    ],\n    \"fields\": [\"from_connector\", \"to_connector\"],\n    \"maxRows\": 50\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/query",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"query"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": ""
+		},
+		{
+			"key": "MYSQL_DB_NAME",
+			"value": ""
+		},
+		{
+			"key": "MYSQL_DB_USER",
+			"value": ""
+		},
+		{
+			"key": "MYSQL_DB_PW",
+			"value": ""
+		},
+		{
+			"key": "MYSQL_DB_HOST",
+			"value": ""
+		},
+		{
+			"key": "POSTGRES_DB_HOST",
+			"value": ""
+		},
+		{
+			"key": "POSTGRES_DB_NAME",
+			"value": ""
+		},
+		{
+			"key": "POSTGRES_DB_USER",
+			"value": ""
+		},
+		{
+			"key": "POSTGRES_DB_PW",
+			"value": ""
+		},
+		{
+			"key": "MONGODB_DB_NAME",
+			"value": ""
+		},
+		{
+			"key": "MONGODB_DB_USER",
+			"value": ""
+		},
+		{
+			"key": "MONGODB_DB_PW",
+			"value": ""
+		},
+		{
+			"key": "MONGODB_DB_HOST",
+			"value": ""
+		},
+		{
+			"key": "ORACLE_DB_PW",
+			"value": ""
+		},
+		{
+			"key": "ORACLE_DB_USER",
+			"value": ""
+		},
+		{
+			"key": "ORACLE_DB_NAME",
+			"value": ""
+		},
+		{
+			"key": "ORACLE_DB_HOST",
+			"value": ""
+		},
+		{
+			"key": "MSSQL_DB_HOST",
+			"value": ""
+		},
+		{
+			"key": "MSSQL_DB_NAME",
+			"value": ""
+		},
+		{
+			"key": "MSSQL_DB_USER",
+			"value": ""
+		},
+		{
+			"key": "MSSQL_DB_PW",
+			"value": ""
+		}
+	]
+}
